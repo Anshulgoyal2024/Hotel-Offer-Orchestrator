@@ -1,0 +1,22 @@
+notepad .gitignore# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test and coverage output
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
