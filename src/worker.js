@@ -3,7 +3,8 @@
 const { Worker, NativeConnection } = require('@temporalio/worker');
 const { config } = require('./config');
 const { logger } = require('./logger');
-const activities = require('./activities/hotel.activities');
+const { createActivities } = require('./activities');
+const activities = createActivities();
 
 async function run() {
   const connection = await NativeConnection.connect({ address: config.temporal.address });
@@ -11,7 +12,7 @@ async function run() {
     connection,
     namespace: config.temporal.namespace,
     taskQueue: config.temporal.taskQueue,
-    workflowsPath: require.resolve('./workflows/hotel.workflow'),
+    workflowsPath: require.resolve('./workflows'),
     activities,
   });
   logger.info('worker.started', { taskQueue: config.temporal.taskQueue, address: config.temporal.address });

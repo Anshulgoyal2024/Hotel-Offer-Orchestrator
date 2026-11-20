@@ -12,11 +12,12 @@ function selectBestOffers(offers) {
     const key = cleanHotelName(offer.name);
     const current = best.get(key);
     if (!current || offer.price < current.price ||
-        (offer.price === current.price && offer.commissionPct > current.commissionPct)) {
+        (offer.price === current.price && (offer.commissionPct > current.commissionPct ||
+          (offer.commissionPct === current.commissionPct && offer.supplier === 'supplierA' && current.supplier !== 'supplierA')))) {
       best.set(key, offer);
     }
   }
   return [...best.values()].sort((a, b) => a.price - b.price || a.name.localeCompare(b.name));
 }
 
-module.exports = { cleanHotelName, selectBestOffers };
+module.exports = { cleanHotelName, selectBestOffers, selectCheapestOffers: selectBestOffers };

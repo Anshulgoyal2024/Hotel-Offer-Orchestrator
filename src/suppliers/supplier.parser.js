@@ -14,12 +14,12 @@ function parseSupplierResponse(supplier, body) {
   let skipped = 0;
 
   for (const row of body) {
-    const name = typeof row?.name === 'string' ? cleanHotelName(row.name) : '';
+    const name = typeof row?.name === 'string' ? row.name : '';
     const price = row?.price;
     const commissionPct = row?.commissionPct;
 
     const valid =
-      name !== '' &&
+      cleanHotelName(name) !== '' &&
       Number.isFinite(price) && price >= 0 &&
       Number.isFinite(commissionPct) && commissionPct >= 0 && commissionPct <= 100;
 

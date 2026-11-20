@@ -17,7 +17,7 @@ function createHotelsRouter({ hotelSearch }) {
       city,
       filters: { minPrice: minPrice ?? null, maxPrice: maxPrice ?? null },
       count: result.hotels.length,
-      hotels: result.hotels,
+      hotels: result.hotels.map(({ name, price, supplier, commissionPct }) => ({ name, price, supplier, commissionPct })),
       meta: {
         cache: result.cache, // hit | miss | refresh
         degraded: result.degraded, // true when one supplier failed

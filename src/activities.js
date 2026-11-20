@@ -64,8 +64,7 @@ function createActivities({
   async function refreshCache({ city, hotels, suppliers }) {
     const degraded = Object.values(suppliers).some((s) => s.status !== 'ok');
     const meta = { refreshedAt: new Date().toISOString(), count: hotels.length, suppliers, degraded };
-    // A partial (degraded) snapshot lives shorter so the failed supplier is retried soon.
-    const ttlSeconds = degraded ? config.redis.degradedCacheTtlSeconds : config.redis.cacheTtlSeconds;
+    const ttlSeconds = config.redis.cacheTtlSeconds;
 
     await cache.replaceCityOffers(getRedisClient(), { city, hotels, meta, ttlSeconds });
     logger.info('activity.refreshCache.ok', { city, count: hotels.length, degraded, ttlSeconds, ...currentActivityInfo() });

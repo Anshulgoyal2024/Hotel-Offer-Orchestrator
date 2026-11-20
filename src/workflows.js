@@ -4,7 +4,7 @@
 
 const { proxyActivities, ApplicationFailure, log } = require('@temporalio/workflow');
 const { SUPPLIERS, ERROR_CODES } = require('./constants');
-const { selectCheapestOffers } = require('./hotel.service');
+const { selectBestOffers } = require('./hotel.service');
 
 // `proxyActivities` gives us functions that look local but actually schedule an
 // activity on the worker. Timeouts and retry rules are configured right here.
@@ -80,7 +80,7 @@ async function hotelSearchWorkflow({ city, minPrice, maxPrice, forceRefresh = fa
       );
     }
 
-    const hotels = selectCheapestOffers(offers); // dedupe + cheapest (pure function)
+    const hotels = selectBestOffers(offers);
     snapshot = await cacheActivities.refreshCache({ city, hotels, suppliers });
   }
 
